@@ -1,40 +1,52 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FanConstruction
 {
     public class FanController
     {
-        private readonly HingeController _hinge;
-        private readonly BodyController _body;
-        private readonly MotorController _fan;
+        private readonly Dictionary<Type, AbstractController> _controllers = new Dictionary<Type, AbstractController>();
 
-        public FanController(HingeController hinge, BodyController body, MotorController fan)
+        public FanController(
+            HingeController hinge, 
+            BodyController body, 
+            MotorController fan)
         {
-            _hinge = hinge;
-            _body = body;
-            _fan = fan;
+            _controllers[typeof(HingeController)] = hinge;
+            _controllers[typeof(BodyController)] = body;
+            _controllers[typeof(MotorController)] = fan;
         }
 
         public void Init(FanView view)
         {
-            _hinge.Init(view.Hinge.GetComponent<HingeJoint>());
-            _body.Init(view.Body.GetComponent<HingeJoint>());
-            _fan.Init(view.Fan.GetComponent<HingeJoint>());
+            HingeJoint hingeJoint = view.Hinge.GetComponent<HingeJoint>();
+            HingeJoint bodyJoint = view.Body.GetComponent<HingeJoint>();
+            HingeJoint fanJoint = view.Fan.GetComponent<HingeJoint>();
+            
+            if (_controllers.ContainsKey(typeof(HingeController)))
+            {
+                _controllers[typeof(HingeController)].Init(hingeJoint);
+            }
+
+            if (_controllers.ContainsKey(typeof(BodyController)))
+            {
+                _controllers[typeof(BodyController)].Init(bodyJoint);
+            }
+
+            if (_controllers.ContainsKey(typeof(MotorController)))
+            {
+                _controllers[typeof(MotorController)].Init(fanJoint);
+            }
         }
 
         public void TogglePower<T>() where T : AbstractController
         {
-            if (typeof(T) == typeof(HingeController))
+            Type controllerType = typeof(T);
+
+            if (_controllers.ContainsKey(controllerType))
             {
-                _hinge.TogglePower();
-            }
-            else if (typeof(T) == typeof(BodyController))
-            {
-                _body.TogglePower();
-            }
-            else if (typeof(T) == typeof(MotorController))
-            {
-                _fan.TogglePower();
+                _controllers[controllerType].TogglePower();
             }
             else
             {
@@ -44,17 +56,25 @@ namespace FanConstruction
         
         public void SetMotor<T>(float targetVelocity, float force, bool isFreeSpin = false) where T : AbstractController
         {
-            if (typeof(T) == typeof(HingeController))
+            Type controllerType = typeof(T);
+
+            if (_controllers.ContainsKey(controllerType))
             {
-                _hinge.SetMotor(targetVelocity, force, isFreeSpin);
+                _controllers[controllerType].SetMotor(targetVelocity, force, isFreeSpin);
             }
-            else if (typeof(T) == typeof(BodyController))
+            else
             {
-                _body.SetMotor(targetVelocity, force, isFreeSpin);
+                Debug.LogWarning("Unsupported controller type.");
             }
-            else if (typeof(T) == typeof(MotorController))
+        }
+
+        public void ChangeDirection<T>() where T : AbstractController
+        {
+            Type controllerType = typeof(T);
+            
+            if (_controllers.ContainsKey(controllerType))
             {
-                _fan.SetMotor(targetVelocity, force, isFreeSpin);
+                _controllers[controllerType].ChangeDirection();
             }
             else
             {
@@ -64,17 +84,25 @@ namespace FanConstruction
 
         public void SetAngularLimit<T>(float min, float max) where T : AbstractController
         {
-            if (typeof(T) == typeof(HingeController))
+            Type controllerType = typeof(T);
+
+            if (_controllers.ContainsKey(controllerType))
             {
-                _hinge.SetAngularLimit(min, max);
+                _controllers[controllerType].SetAngularLimit(min, max);
             }
-            else if (typeof(T) == typeof(BodyController))
+            else
             {
-                _body.SetAngularLimit(min, max);
+                Debug.LogWarning("Unsupported controller type.");
             }
-            else if (typeof(T) == typeof(MotorController))
+        }
+        
+        public void ToggleJoint<T>() where T : AbstractController
+        {
+            Type controllerType = typeof(T);
+
+            if (_controllers.ContainsKey(controllerType))
             {
-                _fan.SetAngularLimit(min, max);
+                _controllers[controllerType].ToggleJoint();
             }
             else
             {
