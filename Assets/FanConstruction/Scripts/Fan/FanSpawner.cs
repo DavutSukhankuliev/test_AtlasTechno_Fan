@@ -11,10 +11,10 @@ namespace FanConstruction
             _pool = pool;
         }
 
-        public void Spawn(Vector3 position)
+        public FanView Spawn(Vector3 position)
         {
             var protocol = new SceneObjectProtocol(position);
-            _pool.Spawn(protocol);
+            return _pool.Spawn(protocol);
         }
 
         public void Despawn(FanView view)

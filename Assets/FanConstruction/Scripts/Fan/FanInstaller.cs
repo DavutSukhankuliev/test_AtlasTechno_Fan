@@ -19,6 +19,22 @@ namespace FanConstruction
             Container
                 .Bind<FanSpawner>()
                 .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<HingeController>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<BodyController>()
+                .AsSingle();
+
+            Container
+                .BindInterfacesAndSelfTo<MotorController>()
+                .AsSingle();
+
+            Container
+                .Bind<FanController>()
+                .AsSingle();
         }
     }
 }

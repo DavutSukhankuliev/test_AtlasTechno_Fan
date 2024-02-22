@@ -6,6 +6,10 @@ namespace FanConstruction
 {
     public class FanView : MonoBehaviour, IDisposable
     {
+        public Transform Hinge;
+        public Transform Body;
+        public Transform Fan;
+        
         private IMemoryPool _pool;
 
         private void OnSpawned(IMemoryPool pool)

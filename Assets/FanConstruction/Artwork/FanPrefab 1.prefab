@@ -396,6 +396,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e9a3dfefd848542b9d54b53ab3f085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stand: {fileID: 1163374900516864565}
+  Hinge: {fileID: 5620254112464357951}
+  Body: {fileID: 3314935509840726175}
+  Fan: {fileID: 1721863418235424572}
 --- !u!1 &6388787702915380333
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,6 +976,11 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 0.00001
+--- !u!4 &5620254112464357951 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3528796787045737956, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
+  m_PrefabInstance: {fileID: 9009427611561717723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5802794987310330307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3278692985423257112, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
