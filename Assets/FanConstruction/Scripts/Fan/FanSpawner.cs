@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace FanConstruction.Fan
+namespace FanConstruction
 {
-    public class FanController
+    public class FanSpawner
     {
         private FanView.Pool _pool;
-
-        public FanController(FanView.Pool pool)
+        
+        public FanSpawner(FanView.Pool pool)
         {
             _pool = pool;
         }
@@ -14,7 +14,7 @@ namespace FanConstruction.Fan
         public void Spawn(Vector3 position)
         {
             var protocol = new SceneObjectProtocol(position);
-            var fan = _pool.Spawn(protocol);
+            _pool.Spawn(protocol);
         }
 
         public void Despawn(FanView view)

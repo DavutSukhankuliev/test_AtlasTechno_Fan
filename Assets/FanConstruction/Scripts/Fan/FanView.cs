@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace FanConstruction.Fan
+namespace FanConstruction
 {
     public class FanView : MonoBehaviour, IDisposable
     {
@@ -39,14 +39,14 @@ namespace FanConstruction.Fan
 
             protected override void OnSpawned(FanView item)
             {
-                item.OnDespawned();
                 base.OnSpawned(item);
+                item.OnSpawned(this);
             }
 
             protected override void OnDespawned(FanView item)
             {
+                item.OnDespawned();
                 base.OnDespawned(item);
-                item.OnSpawned(this);
             }
         }
     }

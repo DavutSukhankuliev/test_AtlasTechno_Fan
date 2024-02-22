@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace FanConstruction.Input
+namespace FanConstruction
 {
     public class InputInstaller : MonoInstaller<InputInstaller>
     {

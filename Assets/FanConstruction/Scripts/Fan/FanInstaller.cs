@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace FanConstruction.Fan
+namespace FanConstruction
 {
     public class FanInstaller : MonoInstaller<FanInstaller>
     {
@@ -17,7 +17,7 @@ namespace FanConstruction.Fan
                 .AsSingle();
 
             Container
-                .Bind<FanController>()
+                .Bind<FanSpawner>()
                 .AsSingle();
         }
     }
