@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FanConstruction
+namespace FanComposition
 {
     public class HingeController : AbstractController
     {
@@ -16,19 +16,23 @@ namespace FanConstruction
             _isFixed = _fixedJoint != null;
         }
 
-        public override void ToggleJoint()
+        public override void FixJoint()
         {
             if (_isFixed)
-            {
-                Object.Destroy(_fixedJoint);
-                _isFixed = false;
-            }
-            else
-            {
-                _fixedJoint = _hingeJoint.gameObject.AddComponent<FixedJoint>();
-                _fixedJoint.connectedBody = _connectedBody;
-                _isFixed = true;
-            }
+                return;
+            
+            _fixedJoint = _hingeJoint.gameObject.AddComponent<FixedJoint>();
+            _fixedJoint.connectedBody = _connectedBody;
+            _isFixed = true;
+        }
+
+        public override void ReleaseJoint()
+        {
+            if (!_isFixed)
+                return;
+            
+            Object.Destroy(_fixedJoint);
+            _isFixed = false;
         }
 
         public override void SetAngularLimit(float min, float max)

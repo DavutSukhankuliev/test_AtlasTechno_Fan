@@ -2,13 +2,16 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace FanConstruction
+namespace FanComposition
 {
     public class FanView : MonoBehaviour, IDisposable
     {
         public Transform Hinge;
         public Transform Body;
         public Transform Fan;
+        public Transform PowerButton;
+        public Transform RotationButton;
+        public Transform HingeButton;
         
         private IMemoryPool _pool;
 

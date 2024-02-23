@@ -1,13 +1,19 @@
 using UnityEngine;
 using Zenject;
 
-namespace FanConstruction
+namespace FanComposition
 {
-    public class FanInstaller : MonoInstaller<FanInstaller>
+    public class FanSceneInstaller : MonoInstaller
     {
         [SerializeField] private FanView _prefab;
-
+        
         public override void InstallBindings()
+        {
+            InstallFan();
+            InstallInput();
+        }
+
+        private void InstallFan()
         {
             Container
                 .BindMemoryPool<FanView, FanView.Pool>()
@@ -19,22 +25,25 @@ namespace FanConstruction
             Container
                 .Bind<FanSpawner>()
                 .AsSingle();
-
+            
             Container
                 .BindInterfacesAndSelfTo<HingeController>()
                 .AsSingle();
-
+            
             Container
                 .BindInterfacesAndSelfTo<BodyController>()
                 .AsSingle();
-
+            
             Container
                 .BindInterfacesAndSelfTo<MotorController>()
                 .AsSingle();
-
+        }
+        private void InstallInput()
+        {
             Container
-                .Bind<FanController>()
-                .AsSingle();
+                .BindInterfacesAndSelfTo<KeyboardInput>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

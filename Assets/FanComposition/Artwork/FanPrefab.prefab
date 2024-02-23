@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4544493841906180366
 Transform:
   m_ObjectHideFlags: 0
@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9013110531435378995
 Transform:
   m_ObjectHideFlags: 0
@@ -399,6 +399,9 @@ MonoBehaviour:
   Hinge: {fileID: 5620254112464357951}
   Body: {fileID: 3314935509840726175}
   Fan: {fileID: 1721863418235424572}
+  PowerButton: {fileID: 138979139903934058}
+  RotationButton: {fileID: 5802794987310330307}
+  HingeButton: {fileID: 7486917787832941854}
 --- !u!1 &6388787702915380333
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5549974696626611044
 Transform:
   m_ObjectHideFlags: 0

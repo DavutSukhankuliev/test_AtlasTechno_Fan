@@ -1,17 +1,17 @@
 using UnityEngine;
 
-namespace FanConstruction
+namespace FanComposition
 {
-    public abstract class AbstractController : IMotorController, ISwingController, IAngleLimitController, IFixedController
+    public abstract class AbstractController : IMotorable, ISwingable, IAngleLimitable, IFixable
     {
         protected HingeJoint _hingeJoint;
-        
         public abstract void Init(HingeJoint hingeJoint);
-        
-        public virtual void TogglePower() { }
+        public virtual void PowerOn() { }
+        public virtual void PowerOff() { }
         public virtual void SetMotor(float targetVelocity, float force, bool isFreeSpin = false) { }
         public virtual void ChangeDirection() { }
         public virtual void SetAngularLimit(float min, float max) { }
-        public virtual void ToggleJoint() { }
+        public virtual void FixJoint() { }
+        public virtual void ReleaseJoint() { }
     }
 }
