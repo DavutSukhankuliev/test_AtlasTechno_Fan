@@ -782,6 +782,9 @@ PrefabInstance:
       addedObject: {fileID: 5526418560139823264}
     - targetCorrespondingSourceObject: {fileID: 8823622426338840976, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7051529343516496249}
+    - targetCorrespondingSourceObject: {fileID: 8823622426338840976, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 5458288739309838676}
     - targetCorrespondingSourceObject: {fileID: 5633522543793817691, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       insertIndex: -1
@@ -858,7 +861,7 @@ HingeJoint:
     spring: 0
     damper: 0
     targetPosition: 0
-  m_UseMotor: 1
+  m_UseMotor: 0
   m_Motor:
     targetVelocity: 10
     force: 10
@@ -878,6 +881,21 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 0.5
+--- !u!138 &7051529343516496249
+FixedJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537097639609744971}
+  m_ConnectedBody: {fileID: 7445137484003082683}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!114 &5458288739309838676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,7 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HingeJoint>k__BackingField: {fileID: 5526418560139823264}
-  <FixedJoint>k__BackingField: {fileID: 0}
+  <FixedJoint>k__BackingField: {fileID: 7051529343516496249}
 --- !u!4 &1163374900516864565 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7864069876763241966, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
@@ -914,8 +932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <OnInteract>k__BackingField:
-    value: {fileID: 8918722293121676076}
+  <Interacted>k__BackingField:
+    value: 0
 --- !u!4 &1721863418235424572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7701897576958845159, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
@@ -1060,8 +1078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <OnInteract>k__BackingField:
-    value: {fileID: 5831349936439891920}
+  <Interacted>k__BackingField:
+    value: 0
 --- !u!4 &5802794987310330307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3278692985423257112, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
@@ -1089,8 +1107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <OnInteract>k__BackingField:
-    value: {fileID: 5526418560139823264}
+  <Interacted>k__BackingField:
+    value: 0
 --- !u!1 &8230896327601296874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098295791472441905, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}

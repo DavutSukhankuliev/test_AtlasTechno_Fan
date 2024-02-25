@@ -5,8 +5,6 @@ namespace FanComposition
 {
     public class InputObjectView : MonoBehaviour
     {
-        //[field: SerializeField] public HingeJoint Joint { get; set; }
-
-        public BoolReactiveProperty Interacted { get; } = new BoolReactiveProperty();
+        public ReactiveCommand Interact = new ReactiveCommand();
     }
 }

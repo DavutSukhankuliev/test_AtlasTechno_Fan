@@ -24,10 +24,7 @@ namespace FanComposition
                 if (Physics.Raycast(ray, out var info))
                 {
                     var parent = info.collider.transform.parent;
-                    parent.GetComponent<InputObjectView>().Interacted.Value 
-                        = !parent.GetComponent<InputObjectView>().Interacted.Value;
-                    
-                    Debug.Log(parent.GetComponent<InputObjectView>().Interacted.Value);
+                    parent.GetComponent<InputObjectView>().Interact.Execute();
                 }
             }
 

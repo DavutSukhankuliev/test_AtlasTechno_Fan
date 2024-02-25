@@ -13,7 +13,9 @@ namespace FanComposition
         public InputObjectView HingeInteractable;
         public InputObjectView BodyInteractable;
         public InputObjectView FanInteractable;
-        
+
+        public bool CachedRotation { get; set; }
+
         private IMemoryPool _pool;
 
         private void OnSpawned(IMemoryPool pool)
@@ -31,6 +33,7 @@ namespace FanComposition
         {
             gameObject.SetActive(true);
             transform.position = protocol.Position;
+            CachedRotation = Body.HingeJoint.useMotor;
         }
 
         public void Dispose()
