@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -90,6 +91,37 @@ namespace FanComposition
                 view.Body.FixedJoint = view.Body.gameObject.AddComponent<FixedJoint>();
                 view.Body.FixedJoint.connectedBody = view.Body.HingeJoint.connectedBody;
             }
+        }
+
+        private async UniTaskVoid ChangeDirectionAsyncCycle(FanView view, int millisecondsStable)
+        {
+            HingeJoint bodyHingeJoint = view.Body.HingeJoint;
+            while (bodyHingeJoint.useMotor)
+            {
+                if (bodyHingeJoint.angle >= bodyHingeJoint.limits.max
+                    || bodyHingeJoint.angle <= bodyHingeJoint.limits.min)
+                {
+                    ChangeDirection(bodyHingeJoint);
+                    await UniTask.Delay(millisecondsStable);
+                }
+
+                await UniTask.Yield();
+            }
+        }
+
+        private void ChangeDirection(HingeJoint joint)
+        {
+            JointMotor motor = joint.motor;
+            SetMotor(joint, -motor.targetVelocity, motor.force, motor.freeSpin);
+        }
+        
+        private void SetMotor(HingeJoint joint, float targetVelocity, float force, bool isFreeSpin = false)
+        {
+            JointMotor motor = joint.motor;
+            motor.targetVelocity = targetVelocity;
+            motor.force = force;
+            motor.freeSpin = isFreeSpin;
+            joint.motor = motor;
         }
     }
 }
