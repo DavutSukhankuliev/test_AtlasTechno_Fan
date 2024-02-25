@@ -2,12 +2,11 @@ using UnityEngine;
 
 namespace FanComposition
 {
-    public struct SceneObjectProtocol
+    public struct FanModel
     {
         public Vector3 Position;
 
-        public SceneObjectProtocol(
-            Vector3 position = new Vector3())
+        public FanModel(Vector3 position)
         {
             Position = position;
         }

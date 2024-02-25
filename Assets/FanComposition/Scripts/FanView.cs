@@ -6,12 +6,13 @@ namespace FanComposition
 {
     public class FanView : MonoBehaviour, IDisposable
     {
-        public Transform Hinge;
-        public Transform Body;
-        public Transform Fan;
-        public Transform PowerButton;
-        public Transform RotationButton;
-        public Transform HingeButton;
+        public HingeView Hinge;
+        public HingeView Body;
+        public HingeView Fan;
+        
+        public InputObjectView HingeInteractable;
+        public InputObjectView BodyInteractable;
+        public InputObjectView FanInteractable;
         
         private IMemoryPool _pool;
 
@@ -26,7 +27,7 @@ namespace FanComposition
             gameObject.SetActive(false);
         }
 
-        private void ReInit(SceneObjectProtocol protocol)
+        private void ReInit(FanModel protocol)
         {
             gameObject.SetActive(true);
             transform.position = protocol.Position;
@@ -37,9 +38,9 @@ namespace FanComposition
             _pool = null;
         }
 
-        public class Pool : MemoryPool<SceneObjectProtocol, FanView>
+        public class Pool : MemoryPool<FanModel, FanView>
         {
-            protected override void Reinitialize(SceneObjectProtocol protocol, FanView item)
+            protected override void Reinitialize(FanModel protocol, FanView item)
             {
                 item.ReInit(protocol);
             }

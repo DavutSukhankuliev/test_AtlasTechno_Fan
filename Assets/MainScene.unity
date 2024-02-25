@@ -200,7 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10261cf055ef4e6ab81d1e331ad8ffab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5601383658658099667, guid: c32d399676c9d7449b453278fbda50b3, type: 3}
 --- !u!1 &326338075
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,10 +455,10 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 1920
+    height: 1080
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 0
   orthographic size: 5
