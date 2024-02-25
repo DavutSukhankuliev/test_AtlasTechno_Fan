@@ -31,11 +31,11 @@ namespace FanComposition
 
         private void FanSubscriptionMethod(FanView view)
         {
-            view.HingeInteractable.Interact.Subscribe(_ => OnHingePressedMethod(view)).AddTo(_disposable);
+            view.HingeInteractable.Interact.Subscribe(_ => OnHingePressedEvent(view)).AddTo(_disposable);
             view.BodyInteractable.Interact.Subscribe(_ => OnRotationPressedEvent(view)).AddTo(_disposable);
             view.FanInteractable.Interact.Subscribe(_ => OnPowerPressedEvent(view)).AddTo(_disposable);
         }
-        private void OnHingePressedMethod(FanView view)
+        private void OnHingePressedEvent(FanView view)
         {
             if (view.Hinge.FixedJoint == null)
             {
@@ -53,23 +53,19 @@ namespace FanComposition
             if (!view.Fan.HingeJoint.useMotor)
             {
                 view.CachedRotation = !view.CachedRotation;
-            }
-            
-            if (!view.Fan.HingeJoint.useMotor)
-            {
                 return;
             }
-            
-            view.Body.HingeJoint.useMotor = !view.Body.HingeJoint.useMotor;
-            
-            if (view.Body.FixedJoint == null)
+
+            if (view.CachedRotation)
             {
+                view.Body.HingeJoint.useMotor = false;
                 view.Body.FixedJoint = view.Body.gameObject.AddComponent<FixedJoint>();
                 view.Body.FixedJoint.connectedBody = view.Body.HingeJoint.connectedBody;
                 view.CachedRotation = false;
             }
             else
             {
+                view.Body.HingeJoint.useMotor = true;
                 Object.Destroy(view.Body.FixedJoint);
                 view.CachedRotation = true;
             }
@@ -79,21 +75,20 @@ namespace FanComposition
         {
             view.Fan.HingeJoint.useMotor = !view.Fan.HingeJoint.useMotor;
 
+            if (!view.CachedRotation)
+            {
+                return;
+            }
+            
             if (view.Fan.HingeJoint.useMotor)
             {
-                if (view.CachedRotation)
-                {
-                    view.Body.HingeJoint.useMotor = true;
-                    Object.Destroy(view.Body.FixedJoint);
-                }
+                Object.Destroy(view.Body.FixedJoint);
+                view.Body.HingeJoint.useMotor = true;
             }
             else
             {
-                if (view.CachedRotation)
-                {
-                    view.Body.FixedJoint = view.Body.gameObject.AddComponent<FixedJoint>();
-                    view.Body.FixedJoint.connectedBody = view.Body.HingeJoint.connectedBody;
-                }
+                view.Body.FixedJoint = view.Body.gameObject.AddComponent<FixedJoint>();
+                view.Body.FixedJoint.connectedBody = view.Body.HingeJoint.connectedBody;
             }
         }
     }
