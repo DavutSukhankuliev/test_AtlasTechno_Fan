@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace FanComposition
 
         public void Despawn(FanView view)
         {
+            view.CancellationTokenSource.Cancel();
             _pool.Despawn(view);
             _view.Remove(view);
         }
@@ -35,6 +37,9 @@ namespace FanComposition
             view.HingeInteractable.Interact.Subscribe(_ => OnHingePressedEvent(view)).AddTo(_disposable);
             view.BodyInteractable.Interact.Subscribe(_ => OnRotationPressedEvent(view)).AddTo(_disposable);
             view.FanInteractable.Interact.Subscribe(_ => OnPowerPressedEvent(view)).AddTo(_disposable);
+
+            view.CancellationTokenSource = new CancellationTokenSource();
+            ChangeDirectionAsyncCycle(view, 3000, view.CancellationTokenSource.Token).Forget();
         }
         private void OnHingePressedEvent(FanView view)
         {
@@ -66,8 +71,8 @@ namespace FanComposition
             }
             else
             {
-                view.Body.HingeJoint.useMotor = true;
                 Object.Destroy(view.Body.FixedJoint);
+                view.Body.HingeJoint.useMotor = true;
                 view.CachedRotation = true;
             }
         }
@@ -93,18 +98,19 @@ namespace FanComposition
             }
         }
 
-        private async UniTaskVoid ChangeDirectionAsyncCycle(FanView view, int millisecondsStable)
+        private async UniTaskVoid ChangeDirectionAsyncCycle(FanView view, int millisecondsStable, CancellationToken cancellationToken = default)
         {
             HingeJoint bodyHingeJoint = view.Body.HingeJoint;
-            while (bodyHingeJoint.useMotor)
+            while (true)
             {
+                await UniTask.Delay(millisecondsStable);
+                
                 if (bodyHingeJoint.angle >= bodyHingeJoint.limits.max
                     || bodyHingeJoint.angle <= bodyHingeJoint.limits.min)
                 {
                     ChangeDirection(bodyHingeJoint);
-                    await UniTask.Delay(millisecondsStable);
                 }
-
+                
                 await UniTask.Yield();
             }
         }

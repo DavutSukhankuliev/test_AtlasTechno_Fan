@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace FanComposition
         public InputObjectView FanInteractable;
 
         public bool CachedRotation { get; set; }
+        public CancellationTokenSource CancellationTokenSource { get; set; }
 
         private IMemoryPool _pool;
 
