@@ -9,9 +9,11 @@ namespace FanComposition
 {
     public class UserInputHandler : ITickable
     {
+        private const string BUTTON_LAYER_MASK = "FanButtons";
+        
         private Camera _currentCamera;
         private CancellationTokenSource _ctr;
-        
+
         private readonly FanController _controller;
         private readonly IUIService _uiService;
         
@@ -28,10 +30,10 @@ namespace FanComposition
         {
             Ray ray = _currentCamera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask("FanButtons")))
+            if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask(BUTTON_LAYER_MASK)))
             {
                 _ctr ??= new CancellationTokenSource();
-                OnHoverIn().Forget();
+                OnHoverIn(info).Forget();
                 if (Input.GetMouseButtonDown(0))
                 {
                     var parent = info.collider.transform.parent;
@@ -50,13 +52,12 @@ namespace FanComposition
             }
         }
 
-        private async UniTaskVoid OnHoverIn()
+        private async UniTaskVoid OnHoverIn(RaycastHit raycastHit)
         {
-            Debug.Log("HoverIn");
-                
             await UniTask.Delay(3000, cancellationToken: _ctr.Token);
 
-            _uiService.Show<UIContext>().TextMeshPro.text = "AAAA";
+            _uiService.Show<UIContext>().TextMeshPro.text 
+                = raycastHit.collider.transform.parent.GetComponent<InputObjectView>().Description;
         }
 
         private void OnHoverOut()

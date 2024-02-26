@@ -13,13 +13,13 @@ namespace FanComposition.Fan
         
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
         private readonly FanConfig _fanConfig;
+        private readonly FanButtonsDescription _description;
 
-        public FanController(
-            FanView.Pool pool,
-            FanConfig fanConfig)
+        public FanController(FanView.Pool pool, FanConfig fanConfig, FanButtonsDescription description)
         {
             _pool = pool;
             _fanConfig = fanConfig;
+            _description = description;
         }
 
         public void Spawn(string fanId, Vector3 position)
@@ -39,9 +39,12 @@ namespace FanComposition.Fan
         private void FanSubscriptionMethod(FanView view, float cooldownInSeconds)
         {
             view.HingeInteractable.Interact.Subscribe(_ => OnHingePressedEvent(view)).AddTo(_disposable);
+            view.HingeInteractable.Description = _description.Hinge;
             view.BodyInteractable.Interact.Subscribe(_ => OnRotationPressedEvent(view)).AddTo(_disposable);
+            view.BodyInteractable.Description = _description.RotationButton;
             view.FanInteractable.Interact.Subscribe(_ => OnPowerPressedEvent(view)).AddTo(_disposable);
-
+            view.FanInteractable.Description = _description.PowerButton;
+            
             view.CancellationTokenSource ??= new CancellationTokenSource();
             ChangeDirectionAsyncCycle(view, (int)(cooldownInSeconds * 1000), view.CancellationTokenSource.Token).Forget();
         }
