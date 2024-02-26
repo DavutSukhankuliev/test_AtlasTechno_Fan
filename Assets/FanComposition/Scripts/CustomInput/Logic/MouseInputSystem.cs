@@ -18,8 +18,11 @@ namespace FanComposition.CustomInput
         
         public void Tick()
         {
-            GetAxis();
-            ClampAxis();
+            if (Input.GetMouseButton(1))
+            {
+                GetAxis();
+                ClampAxis();
+            }
         }
 
         private void GetAxis()
