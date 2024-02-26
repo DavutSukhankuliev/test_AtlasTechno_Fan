@@ -5,9 +5,9 @@ using FanComposition.UI;
 using UnityEngine;
 using Zenject;
 
-namespace FanComposition
+namespace FanComposition.CustomInput
 {
-    public class UserInputHandler : ITickable
+    public class FanInputHandler : ITickable
     {
         private const string BUTTON_LAYER_MASK = "FanButtons";
         
@@ -17,7 +17,7 @@ namespace FanComposition
         private readonly FanController _controller;
         private readonly IUIService _uiService;
         
-        public UserInputHandler(TickableManager tickableManager, FanController controller, IUIService uiService)
+        public FanInputHandler(TickableManager tickableManager, FanController controller, IUIService uiService)
         {
             _controller = controller;
             _uiService = uiService;
@@ -28,13 +28,13 @@ namespace FanComposition
         
         public void Tick()
         {
-            Ray ray = _currentCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
+            Ray ray = _currentCamera.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask(BUTTON_LAYER_MASK)))
             {
                 _ctr ??= new CancellationTokenSource();
                 OnHoverIn(info).Forget();
-                if (UnityEngine.Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     var parent = info.collider.transform.parent;
                     parent.GetComponent<InputObjectView>().Interact.Execute();
@@ -46,7 +46,7 @@ namespace FanComposition
                 OnHoverOut();
             }
 
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 _controller.Spawn("StandardFan", Vector3.zero);
             }

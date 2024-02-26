@@ -30,11 +30,6 @@ namespace FanComposition.Fan
             Container
                 .Bind<FanController>()
                 .AsSingle();
-
-            Container
-                .Bind<UserInputHandler>()
-                .AsSingle()
-                .NonLazy();
         }
     }
 }
