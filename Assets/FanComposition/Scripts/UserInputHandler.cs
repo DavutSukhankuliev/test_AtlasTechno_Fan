@@ -28,13 +28,13 @@ namespace FanComposition
         
         public void Tick()
         {
-            Ray ray = _currentCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _currentCamera.ScreenPointToRay(UnityEngine.Input.mousePosition);
 
             if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask(BUTTON_LAYER_MASK)))
             {
                 _ctr ??= new CancellationTokenSource();
                 OnHoverIn(info).Forget();
-                if (Input.GetMouseButtonDown(0))
+                if (UnityEngine.Input.GetMouseButtonDown(0))
                 {
                     var parent = info.collider.transform.parent;
                     parent.GetComponent<InputObjectView>().Interact.Execute();
@@ -46,7 +46,7 @@ namespace FanComposition
                 OnHoverOut();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
                 _controller.Spawn("StandardFan", Vector3.zero);
             }
