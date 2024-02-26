@@ -7,19 +7,26 @@ namespace FanComposition
 {
     public class FanView : MonoBehaviour, IDisposable
     {
-        public HingeView Hinge;
-        public HingeView Body;
-        public HingeView Fan;
+        [field: SerializeField] public HingeView Hinge { get; private set; }
+        [field: SerializeField] public HingeView Body { get; private set; }
+        [field: SerializeField] public HingeView Fan { get; private set; }
         
-        public InputObjectView HingeInteractable;
-        public InputObjectView BodyInteractable;
-        public InputObjectView FanInteractable;
+        [field: SerializeField] public InputObjectView HingeInteractable { get; private set; }
+        [field: SerializeField] public InputObjectView BodyInteractable { get; private set; }
+        [field: SerializeField] public InputObjectView FanInteractable { get; private set; }
 
         public bool CachedRotation { get; set; }
         public CancellationTokenSource CancellationTokenSource { get; set; }
-
+        
         private IMemoryPool _pool;
 
+        public void Dispose()
+        {
+            CancellationTokenSource.Dispose();
+            CancellationTokenSource = null;
+            _pool = null;
+        }
+        
         private void OnSpawned(IMemoryPool pool)
         {
             _pool = pool;
@@ -28,17 +35,22 @@ namespace FanComposition
         private void OnDespawned()
         {
             transform.position = Vector3.zero;
-            Hinge.HingeJoint.limits = new JointLimits();
-            Body.HingeJoint.limits = new JointLimits();
-            Body.HingeJoint.motor = new JointMotor();
-            Fan.HingeJoint.motor = new JointMotor();
+            ResetFanParameters();
             gameObject.SetActive(false);
         }
-
+        
         private void ReInit(FanModel protocol, Vector3 position)
         {
             gameObject.SetActive(true);
             transform.position = position;
+
+            SetFanParameters(protocol);
+
+            CachedRotation = Body.HingeJoint.useMotor;
+        }
+
+        private void SetFanParameters(FanModel protocol)
+        {
             Hinge.HingeJoint.limits = new JointLimits()
             {
                 min = protocol.HingeMinAngularLimit,
@@ -61,15 +73,14 @@ namespace FanComposition
                 force = protocol.FanMotorForce,
                 freeSpin = protocol.IsFanMotorFreeSpin,
             };
-            
-            CachedRotation = Body.HingeJoint.useMotor;
         }
-
-        public void Dispose()
+        
+        private void ResetFanParameters()
         {
-            CancellationTokenSource.Dispose();
-            CancellationTokenSource = null;
-            _pool = null;
+            Hinge.HingeJoint.limits = new JointLimits();
+            Body.HingeJoint.limits = new JointLimits();
+            Body.HingeJoint.motor = new JointMotor();
+            Fan.HingeJoint.motor = new JointMotor();
         }
 
         public class Pool : MemoryPool<FanModel, Vector3, FanView>

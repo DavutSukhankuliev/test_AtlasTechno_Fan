@@ -21,7 +21,7 @@ namespace FanComposition
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = _currentCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out var info))
+                if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask("FanButtons")))
                 {
                     var parent = info.collider.transform.parent;
                     parent.GetComponent<InputObjectView>().Interact.Execute();

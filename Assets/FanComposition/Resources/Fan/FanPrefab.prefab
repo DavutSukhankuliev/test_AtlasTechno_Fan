@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4544493841906180366}
   - component: {fileID: 2836736139558817444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoxCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9013110531435378995}
   - component: {fileID: 2586984434947614167}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoxCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,12 +396,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e9a3dfefd848542b9d54b53ab3f085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hinge: {fileID: 2443900646215755280}
-  Body: {fileID: 5458288739309838676}
-  Fan: {fileID: 2188232219734455649}
-  HingeInteractable: {fileID: 1853888786464775461}
-  BodyInteractable: {fileID: 409206591595617235}
-  FanInteractable: {fileID: 5804995624799369922}
+  <Hinge>k__BackingField: {fileID: 2443900646215755280}
+  <Body>k__BackingField: {fileID: 5458288739309838676}
+  <Fan>k__BackingField: {fileID: 2188232219734455649}
+  <HingeInteractable>k__BackingField: {fileID: 1853888786464775461}
+  <BodyInteractable>k__BackingField: {fileID: 409206591595617235}
+  <FanInteractable>k__BackingField: {fileID: 5804995624799369922}
 --- !u!1 &6388787702915380333
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5549974696626611044}
   - component: {fileID: 8371086628304508123}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoxCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,6 +657,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9063797787580114547}
     m_Modifications:
+    - target: {fileID: 1621663995342167563, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1936841006837043909, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.0005748597
@@ -677,6 +681,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4278401468983488117, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5982731825239942980, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -688,6 +696,10 @@ PrefabInstance:
     - target: {fileID: 7379457294735701844, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       propertyPath: m_Name
       value: fan
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595861650986676626, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7701897576958845159, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -932,8 +944,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Interacted>k__BackingField:
-    value: 0
 --- !u!4 &1721863418235424572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7701897576958845159, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
@@ -1078,8 +1088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Interacted>k__BackingField:
-    value: 0
 --- !u!4 &5802794987310330307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3278692985423257112, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}
@@ -1107,8 +1115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757740e2168b4e5a8ecfd46819ff7d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Interacted>k__BackingField:
-    value: 0
 --- !u!1 &8230896327601296874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098295791472441905, guid: 8c029bacec90a4648a16ee39593457a0, type: 3}

@@ -10,22 +10,23 @@ namespace FanComposition
     {
         private FanView.Pool _pool;
         private List<FanView> _view = new List<FanView>();
-        private CompositeDisposable _disposable = new CompositeDisposable();
-
+        
+        private readonly CompositeDisposable _disposable = new CompositeDisposable();
         private readonly FanConfig _fanConfig;
 
-        public FanController(FanView.Pool pool, FanConfig fanConfig)
+        public FanController(
+            FanView.Pool pool,
+            FanConfig fanConfig)
         {
             _pool = pool;
             _fanConfig = fanConfig;
         }
 
-        public FanView Spawn(string fanId, Vector3 position)
+        public void Spawn(string fanId, Vector3 position)
         {
             var view = _pool.Spawn(_fanConfig.Get(fanId), position);
             _view.Add(view);
             FanSubscriptionMethod(view, _fanConfig.Get(fanId).CooldownDirectionChangeSeconds);
-            return view;
         }
 
         public void Despawn(FanView view)
@@ -106,6 +107,11 @@ namespace FanComposition
             HingeJoint bodyHingeJoint = view.Body.HingeJoint;
             while (true)
             {
+                if (!bodyHingeJoint)
+                {
+                    return;
+                }
+                
                 if (bodyHingeJoint.angle >= bodyHingeJoint.limits.max
                     || bodyHingeJoint.angle <= bodyHingeJoint.limits.min)
                 {

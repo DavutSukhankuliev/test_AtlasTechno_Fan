@@ -1,4 +1,3 @@
-using UnityEngine;
 using Zenject;
 
 namespace FanComposition
@@ -9,13 +8,13 @@ namespace FanComposition
         {
             Container
                 .Bind<FanConfig>()
-                .FromScriptableObjectResource("FanConfigs")
+                .FromScriptableObjectResource("Fan/FanConfigs")
                 .AsSingle();
             
             Container
                 .BindMemoryPool<FanView, FanView.Pool>()
                 .WithMaxSize(5)
-                .FromComponentInNewPrefabResource("FanPrefab")
+                .FromComponentInNewPrefabResource("Fan/FanPrefab")
                 .UnderTransformGroup("Fans")
                 .AsSingle();
 

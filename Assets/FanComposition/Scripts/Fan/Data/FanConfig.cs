@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +15,16 @@ namespace FanComposition
         {
             _isInit = false;
         }
+        
+        private void Init()
+        {
+            foreach (var model in _models)
+            {
+                _dictionary.Add(model.ID, model);
+            }
+
+            _isInit = true;
+        }
 
         public FanModel Get(string id)
         {
@@ -30,16 +39,6 @@ namespace FanComposition
             }
             Debug.LogError($"Couldn't find FanModel with name {id}");
             return new FanModel();
-        }
-
-        private void Init()
-        {
-            foreach (var model in _models)
-            {
-                _dictionary.Add(model.ID, model);
-            }
-
-            _isInit = true;
         }
     }
 }
