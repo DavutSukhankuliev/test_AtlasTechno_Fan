@@ -23,7 +23,7 @@ namespace FanComposition.Fan
                 .AsSingle();
 
             Container
-                .Bind<FanInputHandler>()
+                .Bind<UserInputHandler>()
                 .AsSingle()
                 .NonLazy();
         }

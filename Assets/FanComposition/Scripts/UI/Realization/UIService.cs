@@ -47,8 +47,9 @@ namespace FanComposition.UI
         public void Hide<T>() where T : UICanvasWindow
         {
             var window = Get<T>();
-            if(window!=null)
+            if(window != null)
             {
+                window.transform.SetParent(_uIRoot.PoolContainer);
                 window.Hide();
             }
         }

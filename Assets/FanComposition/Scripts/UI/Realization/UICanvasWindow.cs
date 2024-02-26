@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace FanComposition.UI
@@ -7,13 +6,7 @@ namespace FanComposition.UI
     {
         [SerializeField] private RectTransform _rectTransform;
 
-        public EventHandler ShowEvent { get; set; }
-        public EventHandler HideEvent { get; set; }
         public abstract void Show();
         public abstract void Hide();
-
-        public virtual void OnShowEnd() { }
-        public virtual void OnHideEnd() { }
-
     }
 }

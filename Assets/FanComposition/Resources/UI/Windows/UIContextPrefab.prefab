@@ -49,7 +49,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f86fd92dd5fe1439755e75bd5eaab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 3199881305411236258}
+  _rectTransform: {fileID: 0}
+  <TextMeshPro>k__BackingField: {fileID: 6019476341264051682}
 --- !u!1 &3208590400861563371
 GameObject:
   m_ObjectHideFlags: 0
