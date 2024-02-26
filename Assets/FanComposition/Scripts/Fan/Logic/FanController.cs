@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     public class FanController
     {

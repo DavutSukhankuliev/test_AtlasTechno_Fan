@@ -3,7 +3,7 @@ using System.Threading;
 using UnityEngine;
 using Zenject;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     public class FanView : MonoBehaviour, IDisposable
     {

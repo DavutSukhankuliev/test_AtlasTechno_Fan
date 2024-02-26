@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     public class FanSceneInstaller : MonoInstaller
     {

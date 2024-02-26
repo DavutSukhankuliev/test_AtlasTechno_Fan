@@ -1,8 +1,7 @@
-using System;
 using UniRx;
 using UnityEngine;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     public class InputObjectView : MonoBehaviour
     {

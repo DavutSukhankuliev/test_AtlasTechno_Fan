@@ -1,6 +1,6 @@
 using System;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     [Serializable]
     public struct FanModel

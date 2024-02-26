@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     [CreateAssetMenu(fileName = "FanConfig", menuName = "Configs/FanConfig", order = 0)]
     public class FanConfig : ScriptableObject

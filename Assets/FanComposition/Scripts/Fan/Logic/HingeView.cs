@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace FanComposition
+namespace FanComposition.Fan
 {
     public class HingeView : MonoBehaviour
     {
