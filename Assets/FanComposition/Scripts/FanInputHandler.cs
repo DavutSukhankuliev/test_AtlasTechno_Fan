@@ -30,7 +30,7 @@ namespace FanComposition
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _controller.Spawn(Vector3.zero);
+                _controller.Spawn("StandardFan", Vector3.zero);
             }
         }
     }

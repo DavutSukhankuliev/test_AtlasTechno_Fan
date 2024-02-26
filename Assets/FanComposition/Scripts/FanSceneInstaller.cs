@@ -8,6 +8,11 @@ namespace FanComposition
         public override void InstallBindings()
         {
             Container
+                .Bind<FanConfig>()
+                .FromScriptableObjectResource("FanConfigs")
+                .AsSingle();
+            
+            Container
                 .BindMemoryPool<FanView, FanView.Pool>()
                 .WithMaxSize(5)
                 .FromComponentInNewPrefabResource("FanPrefab")

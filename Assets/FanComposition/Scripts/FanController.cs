@@ -8,20 +8,23 @@ namespace FanComposition
 {
     public class FanController
     {
-        private CompositeDisposable _disposable = new CompositeDisposable();
         private FanView.Pool _pool;
         private List<FanView> _view = new List<FanView>();
+        private CompositeDisposable _disposable = new CompositeDisposable();
 
-        public FanController(FanView.Pool pool)
+        private readonly FanConfig _fanConfig;
+
+        public FanController(FanView.Pool pool, FanConfig fanConfig)
         {
             _pool = pool;
+            _fanConfig = fanConfig;
         }
 
-        public FanView Spawn(Vector3 position)
+        public FanView Spawn(string fanId, Vector3 position)
         {
-            var view = _pool.Spawn(new FanModel(position));
+            var view = _pool.Spawn(_fanConfig.Get(fanId), position);
             _view.Add(view);
-            FanSubscriptionMethod(view);
+            FanSubscriptionMethod(view, _fanConfig.Get(fanId).CooldownDirectionChangeSeconds);
             return view;
         }
 
@@ -32,14 +35,14 @@ namespace FanComposition
             _view.Remove(view);
         }
 
-        private void FanSubscriptionMethod(FanView view)
+        private void FanSubscriptionMethod(FanView view, float cooldownInSeconds)
         {
             view.HingeInteractable.Interact.Subscribe(_ => OnHingePressedEvent(view)).AddTo(_disposable);
             view.BodyInteractable.Interact.Subscribe(_ => OnRotationPressedEvent(view)).AddTo(_disposable);
             view.FanInteractable.Interact.Subscribe(_ => OnPowerPressedEvent(view)).AddTo(_disposable);
 
-            view.CancellationTokenSource = new CancellationTokenSource();
-            ChangeDirectionAsyncCycle(view, 3000, view.CancellationTokenSource.Token).Forget();
+            view.CancellationTokenSource ??= new CancellationTokenSource();
+            ChangeDirectionAsyncCycle(view, (int)(cooldownInSeconds * 1000), view.CancellationTokenSource.Token).Forget();
         }
         private void OnHingePressedEvent(FanView view)
         {
@@ -103,15 +106,15 @@ namespace FanComposition
             HingeJoint bodyHingeJoint = view.Body.HingeJoint;
             while (true)
             {
-                await UniTask.Delay(millisecondsStable);
-                
                 if (bodyHingeJoint.angle >= bodyHingeJoint.limits.max
                     || bodyHingeJoint.angle <= bodyHingeJoint.limits.min)
                 {
+                    await UniTask.Delay(millisecondsStable, cancellationToken: cancellationToken);
                     ChangeDirection(bodyHingeJoint);
+                    await UniTask.Delay(millisecondsStable, cancellationToken: cancellationToken);
                 }
-                
-                await UniTask.Yield();
+
+                await UniTask.Yield(cancellationToken: cancellationToken);
             }
         }
 

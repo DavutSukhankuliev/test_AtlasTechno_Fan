@@ -28,26 +28,55 @@ namespace FanComposition
         private void OnDespawned()
         {
             transform.position = Vector3.zero;
+            Hinge.HingeJoint.limits = new JointLimits();
+            Body.HingeJoint.limits = new JointLimits();
+            Body.HingeJoint.motor = new JointMotor();
+            Fan.HingeJoint.motor = new JointMotor();
             gameObject.SetActive(false);
         }
 
-        private void ReInit(FanModel protocol)
+        private void ReInit(FanModel protocol, Vector3 position)
         {
             gameObject.SetActive(true);
-            transform.position = protocol.Position;
+            transform.position = position;
+            Hinge.HingeJoint.limits = new JointLimits()
+            {
+                min = protocol.HingeMinAngularLimit,
+                max = protocol.HingeMaxAngularLimit
+            };
+            Body.HingeJoint.limits = new JointLimits()
+            {
+                min = protocol.BodyMinAngularLimit,
+                max = protocol.BodyMaxAngularLimit
+            };
+            Body.HingeJoint.motor = new JointMotor()
+            {
+                targetVelocity = protocol.BodyMotorTargetVelocity,
+                force = protocol.BodyMotorForce,
+                freeSpin = protocol.IsBodyMotorFreeSpin,
+            };
+            Fan.HingeJoint.motor = new JointMotor()
+            {
+                targetVelocity = protocol.FanMotorTargetVelocity,
+                force = protocol.FanMotorForce,
+                freeSpin = protocol.IsFanMotorFreeSpin,
+            };
+            
             CachedRotation = Body.HingeJoint.useMotor;
         }
 
         public void Dispose()
         {
+            CancellationTokenSource.Dispose();
+            CancellationTokenSource = null;
             _pool = null;
         }
 
-        public class Pool : MemoryPool<FanModel, FanView>
+        public class Pool : MemoryPool<FanModel, Vector3, FanView>
         {
-            protected override void Reinitialize(FanModel protocol, FanView item)
+            protected override void Reinitialize(FanModel protocol, Vector3 position, FanView item)
             {
-                item.ReInit(protocol);
+                item.ReInit(protocol, position);
             }
 
             protected override void OnSpawned(FanView item)
