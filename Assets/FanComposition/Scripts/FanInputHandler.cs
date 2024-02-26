@@ -1,3 +1,4 @@
+using FanComposition.Fan;
 using UnityEngine;
 using Zenject;
 
