@@ -2,11 +2,12 @@ using Zenject;
 
 namespace FanComposition.Fan
 {
-    public class FanSceneInstaller : MonoInstaller
+    public class FanInstaller : MonoInstaller
     {
         private const string FAN_BUTTONS_DESCRIPTION_CONFIG = "Fan/FanButtonsDescription";
         private const string FAN_CONFIG = "Fan/FanConfigs";
         private const string FAN_PREFAB = "Fan/FanPrefab";
+        private const string FAN_GROUP = "Fans";
         
         public override void InstallBindings()
         {
@@ -24,7 +25,7 @@ namespace FanComposition.Fan
                 .BindMemoryPool<FanView, FanView.Pool>()
                 .WithMaxSize(5)
                 .FromComponentInNewPrefabResource(FAN_PREFAB)
-                .UnderTransformGroup("Fans")
+                .UnderTransformGroup(FAN_GROUP)
                 .AsSingle();
 
             Container

@@ -2,59 +2,48 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using FanComposition.Fan;
 using FanComposition.UI;
+using UniRx;
 using UnityEngine;
-using Zenject;
 
 namespace FanComposition.CustomInput
 {
-    public class FanInputHandler : ITickable
+    public class FanInputHandler
     {
-        private const string BUTTON_LAYER_MASK = "FanButtons";
+        private readonly CustomInputConfig _customInputConfig;
+        private readonly FanInputSystem _fanInputSystem;
+        private readonly FanController _fanController;
+        private readonly IUIService _uiService;
+        private readonly CompositeDisposable _disposable = new CompositeDisposable();
         
-        private Camera _currentCamera;
         private CancellationTokenSource _ctr;
 
-        private readonly FanController _controller;
-        private readonly IUIService _uiService;
-        
-        public FanInputHandler(TickableManager tickableManager, FanController controller, IUIService uiService)
+        public FanInputHandler(CustomInputConfig customInputConfig, FanInputSystem fanInputSystem, FanController fanController, IUIService uiService)
         {
-            _controller = controller;
+            _customInputConfig = customInputConfig;
+            _fanInputSystem = fanInputSystem;
+            _fanController = fanController;
             _uiService = uiService;
-            tickableManager.Add(this);
-            
-            _currentCamera = Camera.main;
+
+            _fanInputSystem.FanSpawnReactiveCommand.Subscribe(_ => OnFanSpawnMethod()).AddTo(_disposable);
+            _fanInputSystem.FanButtonHoverInReactiveCommand.Subscribe(OnHoverInMethod).AddTo(_disposable);
+            _fanInputSystem.FanButtonHoverOutReactiveCommand.Subscribe(_ => OnHoverOut()).AddTo(_disposable);
+            _fanInputSystem.FanButtonInteractReactiveCommand.Subscribe(OnFanButtonInteractMethod).AddTo(_disposable);
+        }
+
+        private void OnFanSpawnMethod()
+        {
+            _fanController.Spawn("StandardFan", Vector3.zero);
         }
         
-        public void Tick()
+        private void OnHoverInMethod(RaycastHit raycastHit)
         {
-            Ray ray = _currentCamera.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out var info, 10, LayerMask.GetMask(BUTTON_LAYER_MASK)))
-            {
-                _ctr ??= new CancellationTokenSource();
-                OnHoverIn(info).Forget();
-                if (Input.GetMouseButtonDown(0))
-                {
-                    var parent = info.collider.transform.parent;
-                    parent.GetComponent<InputObjectView>().Interact.Execute();
-                    OnHoverOut();
-                }
-            }
-            else
-            {
-                OnHoverOut();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _controller.Spawn("StandardFan", Vector3.zero);
-            }
+            OnHoverIn(raycastHit).Forget();
         }
-
+        
         private async UniTaskVoid OnHoverIn(RaycastHit raycastHit)
         {
-            await UniTask.Delay(3000, cancellationToken: _ctr.Token);
+            _ctr ??= new CancellationTokenSource();
+            await UniTask.Delay((int)(_customInputConfig.DelayBeforeContextMenuShowsUpSec * 1000), cancellationToken: _ctr.Token);
 
             _uiService.Show<UIContext>().TextMeshPro.text 
                 = raycastHit.collider.transform.parent.GetComponent<InputObjectView>().Description;
@@ -71,6 +60,13 @@ namespace FanComposition.CustomInput
             _ctr.Cancel();
             _ctr.Dispose();
             _ctr = null;
+        }
+        
+        private void OnFanButtonInteractMethod(RaycastHit raycastHit)
+        {
+            var parent = raycastHit.collider.transform.parent;
+            parent.GetComponent<InputObjectView>().Interact.Execute();
+            OnHoverOut();
         }
     }
 }

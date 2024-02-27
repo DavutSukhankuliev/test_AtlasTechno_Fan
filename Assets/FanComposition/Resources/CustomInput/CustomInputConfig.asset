@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraMouseSensitivity>k__BackingField: 1
   <CameraMovementVelocity>k__BackingField: 2
+  <DelayBeforeContextMenuShowsUpSec>k__BackingField: 2

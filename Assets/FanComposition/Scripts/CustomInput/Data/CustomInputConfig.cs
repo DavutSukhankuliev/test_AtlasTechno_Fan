@@ -7,5 +7,6 @@ namespace FanComposition.CustomInput
     {
         [field: SerializeField, Range(0.1f,3)] public float CameraMouseSensitivity { get; private set; }
         [field: SerializeField, Range(0.1f,5)] public float CameraMovementVelocity { get; private set; }
+        [field: SerializeField, Range(0.1f,5)] public float DelayBeforeContextMenuShowsUpSec { get; private set; }
     }
 }

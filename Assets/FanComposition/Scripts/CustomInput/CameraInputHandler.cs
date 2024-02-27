@@ -10,7 +10,7 @@ namespace FanComposition.CustomInput
         
         private Camera _currentCamera; 
 
-        public CameraInputHandler(MouseInputSystem mouseInputSystem, TickableManager tickableManager, KeyboardInputSystem keyboardInputSystem)
+        public CameraInputHandler(MouseInputSystem mouseInputSystem, KeyboardInputSystem keyboardInputSystem, TickableManager tickableManager)
         {
             _mouseInputSystem = mouseInputSystem;
             _keyboardInputSystem = keyboardInputSystem;
