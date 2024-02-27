@@ -346,6 +346,9 @@ PublishScripts/
 # NuGet Symbol Packages
 *.snupkg
 
+# vs packages
+[Pp]rojectSettings/
+
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
